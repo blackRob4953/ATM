@@ -1,0 +1,191 @@
+
+package atm;
+
+/**
+ *
+ * @author orobosaenagbare
+ */
+import java.io.*;
+
+import java.util.Scanner;
+
+public class ATM {
+
+    
+    public static void main(String[] args) {
+
+        Scanner keyboard = new Scanner(System.in);
+
+        int account;
+        int pwd;
+        int opt;
+        int balance = 500;
+        int restartVal = 1;
+
+        do {
+            System.out.println("Welcome to your virtual ATM Machine!");
+            System.out.println("Please enter your 6-digit Account Number:");
+
+            while (!keyboard.hasNextInt()) {
+                System.out.println("\nError! Letters are not numbers.");
+                System.out.println("Please re-enter your 6-digit Account Number:");
+                keyboard.next();
+            }
+
+            account = keyboard.nextInt();
+
+        //FOR LENGTH VERIFICATION LATER...
+            //int length = String.valueOf(account).length();
+            if (account != 123456) {
+
+                do {
+                    System.out.println("\nError: Invalid Accound Number!");
+                    System.out.println("Please enter your 6-digit Account Number:");
+
+                    while (!keyboard.hasNextInt()) {
+                        System.out.println("\nError! Letters are not numbers.");
+                        System.out.println("Please re-enter your 6-digit Account Number:");
+                        keyboard.next();
+                    }
+
+                    account = keyboard.nextInt();
+                } while (account != 123456);
+            }
+
+        //Account VALIDATED
+            System.out.println("\nPlease enter your 4-digit Password:");
+
+            while (!keyboard.hasNextInt()) {
+                System.out.println("\nError! Letters are not numbers.");
+                System.out.println("Please re-enter your 4-digit Password:");
+                keyboard.next();
+            }
+
+            pwd = keyboard.nextInt();
+
+            if (pwd != 0000) {
+                do {
+
+                    System.out.println("\nERROR! Invalid Password!");
+                    System.out.println("Please enter your 4-digit password:");
+
+                    while (!keyboard.hasNextInt()) {
+                        System.out.println("\nError! Letters are not numbers.");
+                        System.out.println("Please re-enter your 4-digit Password:");
+                        keyboard.next();
+                    }
+
+                    pwd = keyboard.nextInt();
+                } while (pwd != 0000);
+            }
+
+        //Password VALIDATION
+            do {
+                System.out.println("\nWelcome ADMIN!");
+                System.out.println("Please choose from the following options:\n"
+                        + "1: Account Balance\n"
+                        + "2: Withdraw\n"
+                        + "3: Deposit\n"
+                        + "4: Exit");
+                System.out.print("Option: ");
+
+                while (!keyboard.hasNextInt()) {
+                    System.out.println("\nTHAT'S NOT A NUMBER!\nPlease choose from the following options:\n"
+                            + "1: Account Balance\n"
+                            + "2: Withdraw\n"
+                            + "3: Deposit\n"
+                            + "4: Exit");
+                    System.out.print("Option: ");
+                    keyboard.next(); //IMPORTANT
+                }
+
+                opt = keyboard.nextInt();
+
+                if (opt != 1 && opt != 2 && opt != 3 && opt != 4) {
+
+                    do {
+                        System.out.println("\nINVALID ENTRY: Please choose from the following options:\n"
+                                + "1: Account Balance\n"
+                                + "2: Withdraw\n"
+                                + "3: Deposit\n"
+                                + "4: Exit");
+                        System.out.print("Option: ");
+
+                        while (!keyboard.hasNextInt()) {
+                            System.out.println("\nTHAT'S NOT A NUMBER!\nPlease choose from the following options:\n"
+                                    + "1: Account Balance\n"
+                                    + "2: Withdraw\n"
+                                    + "3: Deposit\n"
+                                    + "4: Exit");
+                            System.out.print("Option: ");
+                            keyboard.next(); //IMPORTANT
+                        }
+
+                        //System.out.print("Option: ");
+                        opt = keyboard.nextInt();
+
+                    } while (opt != 1 && opt != 2 && opt != 3 && opt != 4);
+
+                }
+
+                if (opt == 1) {      //Account Balance
+
+                    System.out.println("\nYour current Account Balance is $" + balance);
+                    restartVal = 2;
+
+                } else if (opt == 2) {     //Withdraw
+
+                    int withdraw;
+                    System.out.println("\nPlease Enter The Amount You Would Like To Withdraw.");
+                    System.out.print("Amount: $");
+
+                    while (!keyboard.hasNextInt()) {
+                        System.out.println("\nERROR! Must be a numerical value.");
+                        System.out.print("Withdraw Amount: $");
+                        keyboard.next();
+                    }
+
+                    withdraw = keyboard.nextInt();
+
+                    if (withdraw > balance) {
+                        System.out.println("\nInsufficient Funds.");
+                        System.out.println("Withdraw Not Complete.");
+                        restartVal = 2;
+                        continue;
+                    }
+
+                    balance = balance - withdraw;
+
+                    System.out.println("\n$" + withdraw + " dispensed below.");
+                    System.out.println("Please Take Cash.");
+                    restartVal = 2;
+
+                } else if (opt == 3) {     //Deposit
+
+                    int deposit;
+                    System.out.println("\nPlease Enter The Amount You Would Like To Deposit.");
+                    System.out.print("Amount: $");
+
+                    while (!keyboard.hasNextInt()) {
+                        System.out.println("\nERROR! Must be a numerical value.");
+                        System.out.print("Deposit Amount: $");
+                        keyboard.next();
+                    }
+
+                    deposit = keyboard.nextInt();
+
+                    System.out.println("\nPlease Insert Cash Below...");
+
+                    balance = balance + deposit;
+
+                    System.out.println("\n$" + deposit + " deposit accepted.");
+                    restartVal = 2;
+                } else if (opt == 4) {     //Exit
+                    System.out.println("\nThank You for Banking!\nHave A Great Day!");
+                    System.exit(0);
+                }
+            } while (restartVal == 2);
+        } while (restartVal == 1);
+    }
+
+}
